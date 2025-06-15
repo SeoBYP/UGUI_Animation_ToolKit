@@ -3,12 +3,14 @@ using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UGUIAnimationToolkit.Modules
 {
     [Serializable]
-    public class ColorModule : ButtonAnimationModule
+    public class ImageColorModule : ButtonAnimationModule
     {
+        [Header("Animation Settings")] public Image Target;
         public Color From = Color.white;
         public Color To = Color.gray;
         public float Duration = 0.2f;
@@ -16,13 +18,18 @@ namespace UGUIAnimationToolkit.Modules
 
         public override UniTask AnimateAsync(UIButtonAnimationContext ctx)
         {
-            var cg = ctx.RectTransform.GetComponent<CanvasGroup>();
-            if (cg == null) return UniTask.CompletedTask;
             return LMotion.Create(From, To, Duration)
                 .WithEase(Ease)
-                .Bind(cg, (alpha, group) => group.alpha = alpha.a)
+                .BindToColor(Target)
+                .ToUniTask();
+        }
+
+        public override UniTask RevertAsync(UIButtonAnimationContext ctx)
+        {
+            return LMotion.Create(To, From, Duration)
+                .WithEase(Ease)
+                .BindToColor(Target)
                 .ToUniTask();
         }
     }
-
 }

@@ -9,6 +9,7 @@ namespace UGUIAnimationToolkit.Modules
     [Serializable]
     public class RotationModule : ButtonAnimationModule
     {
+        [Header("Animation Settings")] public RectTransform Target;
         public Vector3 FromEuler = Vector3.zero;
         public Vector3 ToEuler = new Vector3(0, 0, 15);
         public float Duration = 0.2f;
@@ -21,7 +22,18 @@ namespace UGUIAnimationToolkit.Modules
                     Quaternion.Euler(ToEuler),
                     Duration)
                 .WithEase(Ease)
-                .BindToLocalRotation(ctx.RectTransform)
+                .BindToLocalRotation(Target)
+                .ToUniTask();
+        }
+
+        public override UniTask RevertAsync(UIButtonAnimationContext ctx)
+        {
+            return LMotion.Create(
+                    Quaternion.Euler(ToEuler),
+                    Quaternion.Euler(FromEuler),
+                    Duration)
+                .WithEase(Ease)
+                .BindToLocalRotation(Target)
                 .ToUniTask();
         }
     }

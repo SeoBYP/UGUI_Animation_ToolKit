@@ -3,24 +3,24 @@ using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UGUIAnimationToolkit.Modules
 {
-// 위치 애니메이션 모듈
     [Serializable]
-    public class PositionModule : ButtonAnimationModule
+    public class ImageFillAmountModule : ButtonAnimationModule
     {
-        [Header("Animation Settings")] public RectTransform Target;
-        public Vector2 From = Vector2.zero;
-        public Vector2 To = Vector2.up * 5f;
+        [Header("Animation Settings")] public Image Target;
+        public float From = 0.0f;
+        public float To = 1.0f;
         public float Duration = 0.2f;
-        public Ease Ease = Ease.OutBounce;
+        public Ease Ease = Ease.OutSine;
 
         public override UniTask AnimateAsync(UIButtonAnimationContext ctx)
         {
             return LMotion.Create(From, To, Duration)
                 .WithEase(Ease)
-                .BindToAnchoredPosition(Target)
+                .BindToFillAmount(Target)
                 .ToUniTask();
         }
 
@@ -28,7 +28,7 @@ namespace UGUIAnimationToolkit.Modules
         {
             return LMotion.Create(To, From, Duration)
                 .WithEase(Ease)
-                .BindToAnchoredPosition(Target)
+                .BindToFillAmount(Target)
                 .ToUniTask();
         }
     }

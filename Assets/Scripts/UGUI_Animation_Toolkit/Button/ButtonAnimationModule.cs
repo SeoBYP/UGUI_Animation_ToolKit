@@ -19,5 +19,9 @@ namespace UGUIAnimationToolkit
         public float Delay = 0f;
         
         public abstract UniTask AnimateAsync(UIButtonAnimationContext ctx);
+        /// <summary>
+        /// 되돌리기 애니메이션을 실행합니다.
+        /// </summary>
+        public abstract UniTask RevertAsync(UIButtonAnimationContext ctx);
     }
 }
