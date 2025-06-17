@@ -8,6 +8,7 @@ using UnityEngine;
 namespace UGUIAnimationToolkit.Modules
 {
     [Serializable]
+    [ModuleCategory("Text",Order = 2)] 
     public class TextColorModule : ButtonAnimationModule
     {
         [Header("Animation Settings")] public TextMeshProUGUI Target;

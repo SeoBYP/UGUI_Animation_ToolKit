@@ -8,6 +8,7 @@ using UnityEngine.UI;
 namespace UGUIAnimationToolkit.Modules
 {
     [Serializable]
+    [ModuleCategory("Image",Order = 1)] 
     public class ImageColorModule : ButtonAnimationModule
     {
         [Header("Animation Settings")] public Image Target;

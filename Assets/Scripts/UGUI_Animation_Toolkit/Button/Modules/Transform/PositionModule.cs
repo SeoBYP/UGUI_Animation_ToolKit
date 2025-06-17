@@ -8,6 +8,7 @@ namespace UGUIAnimationToolkit.Modules
 {
 // 위치 애니메이션 모듈
     [Serializable]
+    [ModuleCategory("Transform",Order = 3)] 
     public class PositionModule : ButtonAnimationModule
     {
         [Header("Animation Settings")] public RectTransform Target;

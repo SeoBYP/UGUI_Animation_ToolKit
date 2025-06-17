@@ -7,6 +7,7 @@ using UnityEngine;
 namespace UGUIAnimationToolkit.Modules
 {
     [Serializable]
+    [ModuleCategory("Transform",Order = 3)] 
     public class ScaleModule : ButtonAnimationModule
     {
         [Header("Animation Settings")] public RectTransform Target;

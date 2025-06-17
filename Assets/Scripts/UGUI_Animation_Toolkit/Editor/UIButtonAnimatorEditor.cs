@@ -1,78 +1,96 @@
 ﻿#if UNITY_EDITOR
 using System;
 using System.Linq;
+using System.Reflection;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
 namespace UGUIAnimationToolkit.Editor
 {
+    // 메뉴 항목 정보를 임시로 저장할 구조체
+    struct MenuItem
+    {
+        public string Path;
+        public Type Type;
+        public int Order;
+    }
+
     [CustomEditor(typeof(UIButtonAnimator))]
     public class UIButtonAnimatorEditor : UnityEditor.Editor
     {
-        private ReorderableList _enterList, _exitList, _downList, _upList;
-        private SerializedProperty _enterSequenceProp, _exitSequenceProp, _downSequenceProp, _upSequenceProp;
-        private bool _enterFoldout = true, _exitFoldout = true, _downFoldout = true, _upFoldout = true;
+        private ReorderableList _hoverList, _clickList;
+        private SerializedProperty _hoverSequenceProp, _clickSequenceProp;
+
+        // [추가] 현재 선택된 탭의 인덱스를 저장할 변수 (0: Hover, 1: Click)
+        private int _selectedTab = 0;
+
+        // [추가] 탭에 표시할 이름들
+        private readonly GUIContent[] _tabs = { new GUIContent("Hover"), new GUIContent("Click") };
 
         private void OnEnable()
         {
             var so = serializedObject;
-            _enterSequenceProp = so.FindProperty("enterSequence");
-            _exitSequenceProp = so.FindProperty("exitSequence");
-            _downSequenceProp = so.FindProperty("downSequence");
-            _upSequenceProp = so.FindProperty("upSequence");
+            _hoverSequenceProp = so.FindProperty("hoverSequence");
+            _clickSequenceProp = so.FindProperty("clickSequence");
 
-            _enterList = CreateList(_enterSequenceProp.FindPropertyRelative("modules"));
-            _exitList = CreateList(_exitSequenceProp.FindPropertyRelative("modules"));
-            _downList = CreateList(_downSequenceProp.FindPropertyRelative("modules"));
-            _upList = CreateList(_upSequenceProp.FindPropertyRelative("modules"));
+            _hoverList = CreateList(_hoverSequenceProp.FindPropertyRelative("modules"));
+            _clickList = CreateList(_clickSequenceProp.FindPropertyRelative("modules"));
         }
 
+        // [수정] OnInspectorGUI를 탭 기반 UI로 재구성합니다.
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            // [수정] DrawComponentsSection() 호출을 완전히 삭제했습니다.
+            EditorGUILayout.Space(5);
 
-            _enterFoldout = DrawSequenceGroup("Enter Animation", _enterList, _enterSequenceProp, _enterFoldout);
-            _exitFoldout = DrawSequenceGroup("Exit Animation", _exitList, _exitSequenceProp, _exitFoldout);
-            _downFoldout = DrawSequenceGroup("Down Animation", _downList, _downSequenceProp, _downFoldout);
-            _upFoldout = DrawSequenceGroup("Up Animation", _upList, _upSequenceProp, _upFoldout);
+            // 1. 탭을 그립니다. GUILayout.Toolbar는 선택된 탭의 인덱스를 반환합니다.
+            _selectedTab = GUILayout.Toolbar(_selectedTab, _tabs, GUILayout.Height(25));
+
+            EditorGUILayout.Space(10);
+
+            // 2. 선택된 탭에 따라 다른 내용을 그립니다.
+            switch (_selectedTab)
+            {
+                // "Hover" 탭이 선택된 경우
+                case 0:
+                    // DrawSequenceGroup을 호출하여 Hover 시퀀스 UI만 그립니다.
+                    DrawSequenceGroup("Hover Animation Settings", _hoverList, _hoverSequenceProp);
+                    break;
+
+                // "Click" 탭이 선택된 경우
+                case 1:
+                    // DrawSequenceGroup을 호출하여 Click 시퀀스 UI만 그립니다.
+                    DrawSequenceGroup("Click Animation Settings", _clickList, _clickSequenceProp);
+                    break;
+            }
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        private bool DrawSequenceGroup(string title, ReorderableList list, SerializedProperty sequenceProp,
-            bool foldoutState)
+        // DrawSequenceGroup 메서드에서 Foldout 관련 로직은 이제 필요 없으므로 제거하고 단순화합니다.
+        private void DrawSequenceGroup(string title, ReorderableList list, SerializedProperty sequenceProp)
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            Rect headerRect = EditorGUILayout.GetControlRect(false, EditorGUIUtility.singleLineHeight + 2);
-            EditorGUI.DrawRect(headerRect, new Color(0.22f, 0.22f, 0.22f));
 
-            var titleRect = new Rect(headerRect.x + 5, headerRect.y + 1, headerRect.width - 10,
-                EditorGUIUtility.singleLineHeight);
-            GUIStyle buttonStyle = new GUIStyle(EditorStyles.boldLabel) { alignment = TextAnchor.MiddleLeft };
-            if (GUI.Button(titleRect, title, buttonStyle))
-            {
-                foldoutState = !foldoutState;
-            }
+            // 헤더 라벨
+            EditorGUILayout.LabelField(title, EditorStyles.boldLabel);
+            EditorGUILayout.Space(5);
 
-            if (foldoutState)
+            // AutoRevert, RevertDelay 필드 (필요하다면 여기에 그릴 수 있습니다)
+            // EditorGUILayout.PropertyField(sequenceProp.FindPropertyRelative("AutoRevert"));
+            // EditorGUILayout.PropertyField(sequenceProp.FindPropertyRelative("RevertDelay"));
+
+            if (list != null)
             {
-                EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(sequenceProp.FindPropertyRelative("AutoRevert"));
-                EditorGUILayout.PropertyField(sequenceProp.FindPropertyRelative("RevertDelay"));
-                EditorGUILayout.Space(5);
-                if (list != null) list.DoLayoutList();
-                EditorGUI.indentLevel--;
+                list.DoLayoutList();
             }
 
             EditorGUILayout.EndVertical();
-            EditorGUILayout.Space(2);
-            return foldoutState;
         }
 
-// ▼▼▼▼▼ UI 깨짐 문제가 해결된 최종 CreateList 메서드 ▼▼▼▼▼
+        // CreateList 메서드는 이전 최종 버전과 동일합니다.
         private ReorderableList CreateList(SerializedProperty modulesProp)
         {
             if (modulesProp == null) return null;
@@ -85,32 +103,50 @@ namespace UGUIAnimationToolkit.Editor
                 if (index < 0 || index >= modulesProp.arraySize) return EditorGUIUtility.singleLineHeight;
                 var element = modulesProp.GetArrayElementAtIndex(index);
                 if (element.managedReferenceValue == null) return EditorGUIUtility.singleLineHeight * 2;
-
                 if (!element.isExpanded) return EditorGUIUtility.singleLineHeight + 4;
-
-                // EditorGUI.GetPropertyHeight가 모든 자식 속성과 Header, Space를 포함하여
-                // 정확한 전체 높이를 계산해주므로 이 부분은 올바릅니다.
                 return EditorGUI.GetPropertyHeight(element, true) + 10;
             };
 
             list.onAddDropdownCallback = (rect, l) =>
             {
                 var menu = new GenericMenu();
+                var menuItems = new System.Collections.Generic.List<MenuItem>();
+
+                // 1. 모든 모듈의 정보를 수집합니다.
                 foreach (var type in TypeCache.GetTypesDerivedFrom<ButtonAnimationModule>())
                 {
                     if (type.IsAbstract) continue;
-                    menu.AddItem(new GUIContent(type.Name.Replace("Module", "")), false, () =>
+
+                    var typeName = type.Name.Replace("Module", "");
+                    var categoryAttribute = type.GetCustomAttribute<ModuleCategoryAttribute>();
+
+                    var path = categoryAttribute?.Path != null ? $"{categoryAttribute.Path}/{typeName}" : typeName;
+                    var order = categoryAttribute?.Order ?? int.MaxValue;
+
+                    menuItems.Add(new MenuItem { Path = path, Type = type, Order = order });
+                }
+
+                // 2. 수집된 정보를 Order 값 기준으로 정렬합니다. Order가 같으면 경로(이름)순으로 정렬합니다.
+                var sortedItems = menuItems.OrderBy(item => item.Order).ThenBy(item => item.Path);
+
+                // 3. 정렬된 순서대로 GenericMenu에 아이템을 추가합니다.
+                foreach (var item in sortedItems)
+                {
+                    menu.AddItem(new GUIContent(item.Path), false, () =>
                     {
                         modulesProp.arraySize++;
                         var element = modulesProp.GetArrayElementAtIndex(modulesProp.arraySize - 1);
-                        element.managedReferenceValue = Activator.CreateInstance(type);
-                        element.isExpanded = true; // 새로 추가된 모듈은 펼쳐진 상태로 시작
+                        // 클로저 문제를 피하기 위해 루프 변수인 item을 지역 변수로 복사합니다.
+                        var moduleType = item.Type;
+                        element.managedReferenceValue = Activator.CreateInstance(moduleType);
+                        element.isExpanded = true;
                         serializedObject.ApplyModifiedProperties();
                     });
                 }
 
                 menu.ShowAsContext();
             };
+
 
             list.drawElementCallback = (rect, index, active, focused) =>
             {
@@ -124,7 +160,6 @@ namespace UGUIAnimationToolkit.Editor
                     return;
                 }
 
-                // -- 헤더 바 그리기 (이전과 동일) --
                 var headerRect = new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight);
                 EditorGUI.DrawRect(headerRect, new Color(0.18f, 0.18f, 0.18f));
 
@@ -147,17 +182,12 @@ namespace UGUIAnimationToolkit.Editor
                     menu.ShowAsContext();
                 }
 
-                // -- 모듈 내용 그리기 --
                 if (element.isExpanded)
                 {
-                    // [수정] element 전체를 한 번에 그리는 대신, 자식 속성들을 순회하며 하나씩 그립니다.
-                    // 이것이 UI가 깨지지 않는 가장 안정적인 방법입니다.
                     var contentRect = new Rect(rect.x, headerRect.yMax + 4, rect.width, 0);
-
                     var prop = element.Copy();
                     var endProp = prop.GetEndProperty();
-                    prop.NextVisible(true); // 첫 번째 자식으로 이동 (Description, Enable 등)
-
+                    prop.NextVisible(true);
                     EditorGUI.indentLevel++;
                     while (prop.NextVisible(false) && !SerializedProperty.EqualContents(prop, endProp))
                     {

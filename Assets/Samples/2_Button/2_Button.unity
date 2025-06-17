@@ -1720,41 +1720,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enterSequence:
-    AutoRevert: 0
-    RevertDelay: 0
+  hoverSequence:
     modules:
-    - rid: 4553839963567030395
-    - rid: 4553839963567030396
-  exitSequence:
-    AutoRevert: 0
-    RevertDelay: 0
+    - rid: 4553840011674386645
+    - rid: 4553840011674386647
+    - rid: 4553840011674386648
+  clickSequence:
     modules:
-    - rid: 4553839963567030407
-    - rid: 4553839963567030408
-  downSequence:
-    AutoRevert: 0
-    RevertDelay: 0
-    modules: []
-  upSequence:
-    AutoRevert: 0
-    RevertDelay: 0
-    modules: []
+    - rid: 4553840011674386649
   references:
     version: 2
     RefIds:
-    - rid: 4553839963567030395
-      type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
+    - rid: 4553840011674386645
+      type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
         Description: 
         Delay: 0
-        Target: {fileID: 1326465583}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553839963567030396
+        Target: {fileID: 1688002515}
+        From: {x: 1, y: 1, z: 1}
+        To: {x: 1.1, y: 1.1, z: 1.1}
+        Duration: 0.07
+        Ease: 5
+    - rid: 4553840011674386647
       type: {class: ImageColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
@@ -1765,28 +1753,28 @@ MonoBehaviour:
         To: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
         Duration: 0.2
         Ease: 2
-    - rid: 4553839963567030407
+    - rid: 4553840011674386648
       type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
         Description: 
         Delay: 0
         Target: {fileID: 1326465583}
-        From: {r: 1, g: 1, b: 1, a: 1}
-        To: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
+        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
+        To: {r: 1, g: 1, b: 1, a: 1}
         Duration: 0.2
         Ease: 2
-    - rid: 4553839963567030408
-      type: {class: ImageColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
+    - rid: 4553840011674386649
+      type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
         Description: 
         Delay: 0
-        Target: {fileID: 2030218217}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 0.3254902, b: 0.3254902, a: 0}
-        Duration: 0.2
-        Ease: 2
+        Target: {fileID: 1688002515}
+        From: {x: 1.1, y: 1.1, z: 1.1}
+        To: {x: 0.9, y: 0.9, z: 0.9}
+        Duration: 0.07
+        Ease: 5
 --- !u!1 &2030218215
 GameObject:
   m_ObjectHideFlags: 0
