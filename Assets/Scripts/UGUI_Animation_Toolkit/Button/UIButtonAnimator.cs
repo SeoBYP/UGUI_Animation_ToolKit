@@ -13,11 +13,15 @@ namespace UGUIAnimationToolkit
 
         private readonly UIButtonAnimationContext _context = new();
 
-        public void OnPointerEnter(PointerEventData eventData) =>
+        public void OnPointerEnter(PointerEventData eventData)
+        {
             Play(hoverSequence, ButtonAnimationEventType.Enter, eventData);
+        }
 
-        public void OnPointerExit(PointerEventData eventData) =>
+        public void OnPointerExit(PointerEventData eventData)
+        {
             Play(hoverSequence, ButtonAnimationEventType.Exit, eventData);
+        }
 
         public void OnPointerDown(PointerEventData eventData) =>
             Play(clickSequence, ButtonAnimationEventType.Down, eventData);

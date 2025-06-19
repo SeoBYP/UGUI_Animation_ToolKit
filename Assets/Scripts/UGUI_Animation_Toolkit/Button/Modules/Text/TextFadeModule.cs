@@ -22,6 +22,7 @@ namespace UGUIAnimationToolkit.Modules
             return LMotion.Create(FromAlpha, ToAlpha, Duration)
                 .WithEase(Ease)
                 .Bind(Target, (a, lbl) => lbl.alpha = a)
+                .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
 
@@ -30,6 +31,7 @@ namespace UGUIAnimationToolkit.Modules
             return LMotion.Create(ToAlpha, FromAlpha, Duration)
                 .WithEase(Ease)
                 .Bind(Target, (a, lbl) => lbl.alpha = a)
+                .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
     }

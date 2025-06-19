@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace UGUIAnimationToolkit.Modules
 {
     [Serializable]
-    [ModuleCategory("Image",Order = 1)] 
+    [ModuleCategory("Image", Order = 1)]
     public class ImageColorModule : ButtonAnimationModule
     {
         [Header("Animation Settings")] public Image Target;
@@ -22,6 +22,7 @@ namespace UGUIAnimationToolkit.Modules
             return LMotion.Create(From, To, Duration)
                 .WithEase(Ease)
                 .BindToColor(Target)
+                .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
 
@@ -30,6 +31,7 @@ namespace UGUIAnimationToolkit.Modules
             return LMotion.Create(To, From, Duration)
                 .WithEase(Ease)
                 .BindToColor(Target)
+                .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
     }

@@ -22,6 +22,7 @@ namespace UGUIAnimationToolkit.Modules
             return LMotion.Create(From, To, Duration)
                 .WithEase(Ease)
                 .BindToColor(Target)
+                .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
 
@@ -30,6 +31,7 @@ namespace UGUIAnimationToolkit.Modules
             return LMotion.Create(To, From, Duration)
                 .WithEase(Ease)
                 .BindToColor(Target)
+                .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
     }

@@ -3,24 +3,27 @@ using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UGUIAnimationToolkit.Modules
 {
     [Serializable]
-    [ModuleCategory("Transform",Order = 3)] 
-    public class ScaleModule : ButtonAnimationModule
+    [ModuleCategory("Image", Order = 1)]
+    public class ImageColorAlphaModule : ButtonAnimationModule
     {
-        [Header("Animation Settings")] public RectTransform Target;
-        public Vector3 From = Vector3.zero;
-        public Vector3 To = Vector3.one;
+        [Header("Animation Settings")] 
+        public Image Target;
+        public float From = 0;
+        public float To = 1;
         public float Duration = 0.2f;
-        public Ease Ease = Ease.OutQuad;
+        public Ease Ease = Ease.OutSine;
 
         public override UniTask AnimateAsync(UIButtonAnimationContext ctx)
         {
+            // [개선] return 키워드 추가 및 AddTo로 모션 핸들링
             return LMotion.Create(From, To, Duration)
                 .WithEase(Ease)
-                .BindToLocalScale(Target)
+                .BindToColorA(Target)
                 .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
@@ -29,7 +32,7 @@ namespace UGUIAnimationToolkit.Modules
         {
             return LMotion.Create(To, From, Duration)
                 .WithEase(Ease)
-                .BindToLocalScale(Target)
+                .BindToColorA(Target)
                 .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }

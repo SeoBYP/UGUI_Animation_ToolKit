@@ -8,7 +8,6 @@ using UnityEngine;
 
 namespace UGUIAnimationToolkit.Editor
 {
-    // 메뉴 항목 정보를 임시로 저장할 구조체
     struct MenuItem
     {
         public string Path;
@@ -19,13 +18,13 @@ namespace UGUIAnimationToolkit.Editor
     [CustomEditor(typeof(UIButtonAnimator))]
     public class UIButtonAnimatorEditor : UnityEditor.Editor
     {
+        // [추가] 모듈 복사를 위한 정적(static) 클립보드 변수
+        private static string _clipboardJson;
+        private static Type _clipboardType;
+
         private ReorderableList _hoverList, _clickList;
         private SerializedProperty _hoverSequenceProp, _clickSequenceProp;
-
-        // [추가] 현재 선택된 탭의 인덱스를 저장할 변수 (0: Hover, 1: Click)
         private int _selectedTab = 0;
-
-        // [추가] 탭에 표시할 이름들
         private readonly GUIContent[] _tabs = { new GUIContent("Hover"), new GUIContent("Click") };
 
         private void OnEnable()
@@ -33,35 +32,22 @@ namespace UGUIAnimationToolkit.Editor
             var so = serializedObject;
             _hoverSequenceProp = so.FindProperty("hoverSequence");
             _clickSequenceProp = so.FindProperty("clickSequence");
-
             _hoverList = CreateList(_hoverSequenceProp.FindPropertyRelative("modules"));
             _clickList = CreateList(_clickSequenceProp.FindPropertyRelative("modules"));
         }
 
-        // [수정] OnInspectorGUI를 탭 기반 UI로 재구성합니다.
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
-
             EditorGUILayout.Space(5);
-
-            // 1. 탭을 그립니다. GUILayout.Toolbar는 선택된 탭의 인덱스를 반환합니다.
             _selectedTab = GUILayout.Toolbar(_selectedTab, _tabs, GUILayout.Height(25));
-
             EditorGUILayout.Space(10);
-
-            // 2. 선택된 탭에 따라 다른 내용을 그립니다.
             switch (_selectedTab)
             {
-                // "Hover" 탭이 선택된 경우
                 case 0:
-                    // DrawSequenceGroup을 호출하여 Hover 시퀀스 UI만 그립니다.
                     DrawSequenceGroup("Hover Animation Settings", _hoverList, _hoverSequenceProp);
                     break;
-
-                // "Click" 탭이 선택된 경우
                 case 1:
-                    // DrawSequenceGroup을 호출하여 Click 시퀀스 UI만 그립니다.
                     DrawSequenceGroup("Click Animation Settings", _clickList, _clickSequenceProp);
                     break;
             }
@@ -69,19 +55,11 @@ namespace UGUIAnimationToolkit.Editor
             serializedObject.ApplyModifiedProperties();
         }
 
-        // DrawSequenceGroup 메서드에서 Foldout 관련 로직은 이제 필요 없으므로 제거하고 단순화합니다.
         private void DrawSequenceGroup(string title, ReorderableList list, SerializedProperty sequenceProp)
         {
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-
-            // 헤더 라벨
             EditorGUILayout.LabelField(title, EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
-
-            // AutoRevert, RevertDelay 필드 (필요하다면 여기에 그릴 수 있습니다)
-            // EditorGUILayout.PropertyField(sequenceProp.FindPropertyRelative("AutoRevert"));
-            // EditorGUILayout.PropertyField(sequenceProp.FindPropertyRelative("RevertDelay"));
-
             if (list != null)
             {
                 list.DoLayoutList();
@@ -90,14 +68,12 @@ namespace UGUIAnimationToolkit.Editor
             EditorGUILayout.EndVertical();
         }
 
-        // CreateList 메서드는 이전 최종 버전과 동일합니다.
         private ReorderableList CreateList(SerializedProperty modulesProp)
         {
             if (modulesProp == null) return null;
             var list = new ReorderableList(serializedObject, modulesProp, true, true, true, true);
 
             list.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Modules", EditorStyles.boldLabel);
-
             list.elementHeightCallback = index =>
             {
                 if (index < 0 || index >= modulesProp.arraySize) return EditorGUIUtility.singleLineHeight;
@@ -107,36 +83,48 @@ namespace UGUIAnimationToolkit.Editor
                 return EditorGUI.GetPropertyHeight(element, true) + 10;
             };
 
+            // [수정] onAddDropdownCallback에 'Paste as New' 기능 추가
             list.onAddDropdownCallback = (rect, l) =>
             {
                 var menu = new GenericMenu();
-                var menuItems = new System.Collections.Generic.List<MenuItem>();
 
-                // 1. 모든 모듈의 정보를 수집합니다.
+                // 1. 클립보드에 내용이 있으면 'Paste as New' 메뉴를 최상단에 추가
+                if (_clipboardJson != null && _clipboardType != null)
+                {
+                    var pasteName = _clipboardType.Name.Replace("Module", "");
+                    menu.AddItem(new GUIContent($"Paste As New ({pasteName})"), false, () =>
+                    {
+                        var newModule = Activator.CreateInstance(_clipboardType);
+                        JsonUtility.FromJsonOverwrite(_clipboardJson, newModule);
+                        modulesProp.arraySize++;
+                        var element = modulesProp.GetArrayElementAtIndex(modulesProp.arraySize - 1);
+                        element.managedReferenceValue = newModule;
+                        element.isExpanded = true;
+                        serializedObject.ApplyModifiedProperties();
+                    });
+                    menu.AddSeparator("");
+                }
+
+                // ... (이하 카테고리/정렬 기능은 이전과 동일)
+
+                var menuItems = new System.Collections.Generic.List<MenuItem>();
                 foreach (var type in TypeCache.GetTypesDerivedFrom<ButtonAnimationModule>())
                 {
                     if (type.IsAbstract) continue;
-
                     var typeName = type.Name.Replace("Module", "");
                     var categoryAttribute = type.GetCustomAttribute<ModuleCategoryAttribute>();
-
                     var path = categoryAttribute?.Path != null ? $"{categoryAttribute.Path}/{typeName}" : typeName;
                     var order = categoryAttribute?.Order ?? int.MaxValue;
-
                     menuItems.Add(new MenuItem { Path = path, Type = type, Order = order });
                 }
 
-                // 2. 수집된 정보를 Order 값 기준으로 정렬합니다. Order가 같으면 경로(이름)순으로 정렬합니다.
                 var sortedItems = menuItems.OrderBy(item => item.Order).ThenBy(item => item.Path);
-
-                // 3. 정렬된 순서대로 GenericMenu에 아이템을 추가합니다.
                 foreach (var item in sortedItems)
                 {
                     menu.AddItem(new GUIContent(item.Path), false, () =>
                     {
                         modulesProp.arraySize++;
                         var element = modulesProp.GetArrayElementAtIndex(modulesProp.arraySize - 1);
-                        // 클로저 문제를 피하기 위해 루프 변수인 item을 지역 변수로 복사합니다.
                         var moduleType = item.Type;
                         element.managedReferenceValue = Activator.CreateInstance(moduleType);
                         element.isExpanded = true;
@@ -147,7 +135,7 @@ namespace UGUIAnimationToolkit.Editor
                 menu.ShowAsContext();
             };
 
-
+            // [수정] drawElementCallback의 '...' 메뉴에 'Copy'와 'Paste Values' 기능 추가
             list.drawElementCallback = (rect, index, active, focused) =>
             {
                 var element = modulesProp.GetArrayElementAtIndex(index);
@@ -178,6 +166,31 @@ namespace UGUIAnimationToolkit.Editor
                 if (EditorGUI.DropdownButton(menuRect, new GUIContent("..."), FocusType.Passive, GUI.skin.label))
                 {
                     var menu = new GenericMenu();
+
+                    // Copy 기능 추가
+                    menu.AddItem(new GUIContent("Copy Values"), false, () =>
+                    {
+                        var module = element.managedReferenceValue;
+                        _clipboardType = module.GetType();
+                        _clipboardJson = JsonUtility.ToJson(module);
+                        Debug.Log($"{_clipboardType.Name} values copied.");
+                    });
+
+                    // Paste Values 기능 추가 (클립보드에 내용이 있고, 타입이 같을 때만 활성화)
+                    if (_clipboardJson != null && _clipboardType == element.managedReferenceValue.GetType())
+                    {
+                        menu.AddItem(new GUIContent("Paste Values"), false, () =>
+                        {
+                            JsonUtility.FromJsonOverwrite(_clipboardJson, element.managedReferenceValue);
+                            serializedObject.ApplyModifiedProperties();
+                        });
+                    }
+                    else
+                    {
+                        menu.AddDisabledItem(new GUIContent("Paste Values"));
+                    }
+
+                    menu.AddSeparator("");
                     menu.AddItem(new GUIContent("Remove"), false, () => modulesProp.DeleteArrayElementAtIndex(index));
                     menu.ShowAsContext();
                 }

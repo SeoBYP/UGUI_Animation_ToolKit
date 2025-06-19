@@ -24,6 +24,7 @@ namespace UGUIAnimationToolkit.Modules
                     Duration)
                 .WithEase(Ease)
                 .BindToLocalRotation(Target)
+                .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
 
@@ -35,6 +36,7 @@ namespace UGUIAnimationToolkit.Modules
                     Duration)
                 .WithEase(Ease)
                 .BindToLocalRotation(Target)
+                .AddTo(ctx.MotionHandle)
                 .ToUniTask();
         }
     }

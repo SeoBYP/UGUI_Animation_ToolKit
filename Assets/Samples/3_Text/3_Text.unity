@@ -358,7 +358,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_6
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1127184255742711237, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
+    - {fileID: 8697585067892964967, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -766,7 +768,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1127184255742711237, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
+    - {fileID: 8697585067892964967, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1026,7 +1030,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_4
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1127184255742711237, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
+    - {fileID: 8697585067892964967, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1151,7 +1157,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1127184255742711237, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
+    - {fileID: 8697585067892964967, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1400,7 +1408,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1127184255742711237, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
+    - {fileID: 8697585067892964967, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1554,7 +1564,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Button_1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1127184255742711237, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
+    - {fileID: 8697585067892964967, guid: ecc0fe7dca468447d95d4035fd267976, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

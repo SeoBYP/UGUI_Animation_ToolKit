@@ -12,7 +12,7 @@ namespace UGUIAnimationToolkit
 
         public async UniTask PlayAsync(UIButtonAnimationContext ctx)
         {
-            ctx.MotionHandle.Cancel();
+            ctx.MotionHandle.Complete();
 
             var forwardTasks = new List<UniTask>();
             var executedModules = new List<ButtonAnimationModule>(); // [추가] 실제로 실행된 모듈만 기록
@@ -41,7 +41,7 @@ namespace UGUIAnimationToolkit
 
         public async UniTask RevertAsync(UIButtonAnimationContext ctx)
         {
-            ctx.MotionHandle.Cancel();
+            ctx.MotionHandle.Complete();
 
             var forwardTasks = new List<UniTask>();
             var executedModules = new List<ButtonAnimationModule>(); // [추가] 실제로 실행된 모듈만 기록
