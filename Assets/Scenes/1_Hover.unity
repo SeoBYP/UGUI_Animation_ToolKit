@@ -531,6 +531,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Interactable: 1
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ThrottleDuration: 0
+  m_DebounceDuration: 0
   hoverSequence:
     modules:
     - rid: 4553840058172702835
@@ -1028,6 +1034,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Interactable: 1
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ThrottleDuration: 0
+  m_DebounceDuration: 0
   hoverSequence:
     modules:
     - rid: 4553840058172702829
@@ -1186,6 +1198,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Interactable: 1
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ThrottleDuration: 0
+  m_DebounceDuration: 0
   hoverSequence:
     modules:
     - rid: 4553840058172702855
@@ -1720,6 +1738,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Interactable: 1
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ThrottleDuration: 0
+  m_DebounceDuration: 0
   hoverSequence:
     modules:
     - rid: 4553840058172702842
@@ -2430,6 +2454,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Interactable: 1
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ThrottleDuration: 0
+  m_DebounceDuration: 0
   hoverSequence:
     modules:
     - rid: 4553840058172702825
@@ -3249,6 +3279,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Interactable: 1
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ThrottleDuration: 0
+  m_DebounceDuration: 0
   hoverSequence:
     modules:
     - rid: 4553840058172702850

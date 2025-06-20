@@ -2,78 +2,63 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using UGUIAnimationToolkit.Editor;
+using UGUIAnimationToolkit.Text;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace UGUIAnimationToolkit.Editor
+namespace UGUIAnimationToolkit.Editor // 네임스페이스를 Text.Editor로 명확히 하는 것을 추천합니다.
 {
-    struct MenuItem
+    [CustomEditor(typeof(UITextAnimator))]
+    public class UITextAnimatorEditor : UnityEditor.Editor
     {
-        public string Path;
-        public Type Type;
-        public int Order;
-    }
-
-    [CustomEditor(typeof(UIButtonAnimator))]
-    public class UIButtonAnimatorEditor : UnityEditor.Editor
-    {
-        // [추가] 모듈 복사를 위한 정적(static) 클립보드 변수
-        private static string _clipboardJson;
-        private static Type _clipboardType;
-
-        private ReorderableList _hoverList, _clickList;
-        private SerializedProperty _hoverSequenceProp, _clickSequenceProp;
-        private int _selectedTab = 0;
-        private readonly GUIContent[] _tabs = { new GUIContent("Hover"), new GUIContent("Click") };
+        private ReorderableList _onPlayList; // 변수 이름 변경
+        private SerializedProperty _onPlaySequenceProp;
 
         private void OnEnable()
         {
-            var so = serializedObject;
-            _hoverSequenceProp = so.FindProperty("hoverSequence");
-            _clickSequenceProp = so.FindProperty("clickSequence");
-            _hoverList = CreateList(_hoverSequenceProp.FindPropertyRelative("modules"));
-            _clickList = CreateList(_clickSequenceProp.FindPropertyRelative("modules"));
+            // 사용하신 코드에 맞춰 "onPlaySequence"를 찾도록 유지했습니다.
+            // 만약 UITextAnimator의 필드 이름이 onEnableSequence라면 이 부분을 수정해야 합니다.
+            _onPlaySequenceProp = serializedObject.FindProperty("onPlaySequence");
+            if (_onPlaySequenceProp != null)
+            {
+                _onPlayList = CreateList(_onPlaySequenceProp.FindPropertyRelative("modules"));
+            }
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+
+            // 버튼 에디터처럼 전체를 Box로 감싸 통일성을 줍니다.
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            EditorGUILayout.LabelField("On Play Sequence", EditorStyles.boldLabel);
             EditorGUILayout.Space(5);
-            _selectedTab = GUILayout.Toolbar(_selectedTab, _tabs, GUILayout.Height(25));
-            EditorGUILayout.Space(10);
-            switch (_selectedTab)
+            if (_onPlayList != null)
             {
-                case 0:
-                    DrawSequenceGroup("Hover Animation Settings", _hoverList, _hoverSequenceProp);
-                    break;
-                case 1:
-                    DrawSequenceGroup("Click Animation Settings", _clickList, _clickSequenceProp);
-                    break;
+                _onPlayList.DoLayoutList();
             }
+
+            EditorGUILayout.EndVertical();
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        private void DrawSequenceGroup(string title, ReorderableList list, SerializedProperty sequenceProp)
-        {
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            EditorGUILayout.LabelField(title, EditorStyles.boldLabel);
-            EditorGUILayout.Space(5);
-            if (list != null)
-            {
-                list.DoLayoutList();
-            }
-
-            EditorGUILayout.EndVertical();
-        }
-
+        // UGUIButtonEditor의 CreateList 로직을 그대로 가져와서 수정합니다.
         private ReorderableList CreateList(SerializedProperty modulesProp)
         {
-            if (modulesProp == null) return null;
+            if (modulesProp == null)
+            {
+                // 해당 프로퍼티를 찾지 못했을 때 경고를 표시합니다.
+                // UGUIAnimator.cs에 onPlaySequence 필드가 있는지 확인하세요.
+                return null;
+            }
+
             var list = new ReorderableList(serializedObject, modulesProp, true, true, true, true);
 
-            list.drawHeaderCallback = rect => EditorGUI.LabelField(rect, "Modules", EditorStyles.boldLabel);
+            list.drawHeaderCallback =
+                rect => EditorGUI.LabelField(rect, "Text Animation Modules", EditorStyles.boldLabel);
             list.elementHeightCallback = index =>
             {
                 if (index < 0 || index >= modulesProp.arraySize) return EditorGUIUtility.singleLineHeight;
@@ -83,19 +68,18 @@ namespace UGUIAnimationToolkit.Editor
                 return EditorGUI.GetPropertyHeight(element, true) + 10;
             };
 
-            // [수정] onAddDropdownCallback에 'Paste as New' 기능 추가
             list.onAddDropdownCallback = (rect, l) =>
             {
                 var menu = new GenericMenu();
 
-                // 1. 클립보드에 내용이 있으면 'Paste as New' 메뉴를 최상단에 추가
-                if (_clipboardJson != null && _clipboardType != null)
+                // 분리된 ModuleClipboard 클래스를 사용합니다.
+                if (ModuleClipboard.ClipboardJson != null && ModuleClipboard.ClipboardType != null)
                 {
-                    var pasteName = _clipboardType.Name.Replace("Module", "");
+                    var pasteName = ModuleClipboard.ClipboardType.Name.Replace("Module", "");
                     menu.AddItem(new GUIContent($"Paste As New ({pasteName})"), false, () =>
                     {
-                        var newModule = Activator.CreateInstance(_clipboardType);
-                        JsonUtility.FromJsonOverwrite(_clipboardJson, newModule);
+                        var newModule = Activator.CreateInstance(ModuleClipboard.ClipboardType);
+                        JsonUtility.FromJsonOverwrite(ModuleClipboard.ClipboardJson, newModule);
                         modulesProp.arraySize++;
                         var element = modulesProp.GetArrayElementAtIndex(modulesProp.arraySize - 1);
                         element.managedReferenceValue = newModule;
@@ -105,10 +89,10 @@ namespace UGUIAnimationToolkit.Editor
                     menu.AddSeparator("");
                 }
 
-                // ... (이하 카테고리/정렬 기능은 이전과 동일)
-
                 var menuItems = new System.Collections.Generic.List<MenuItem>();
-                foreach (var type in TypeCache.GetTypesDerivedFrom<ButtonAnimationModule>())
+
+                // [핵심 수정] ButtonAnimationModule -> TextAnimationModule로 변경
+                foreach (var type in TypeCache.GetTypesDerivedFrom<TextAnimationModule>())
                 {
                     if (type.IsAbstract) continue;
                     var typeName = type.Name.Replace("Module", "");
@@ -135,7 +119,6 @@ namespace UGUIAnimationToolkit.Editor
                 menu.ShowAsContext();
             };
 
-            // [수정] drawElementCallback의 '...' 메뉴에 'Copy'와 'Paste Values' 기능 추가
             list.drawElementCallback = (rect, index, active, focused) =>
             {
                 var element = modulesProp.GetArrayElementAtIndex(index);
@@ -166,22 +149,19 @@ namespace UGUIAnimationToolkit.Editor
                 if (EditorGUI.DropdownButton(menuRect, new GUIContent("..."), FocusType.Passive, GUI.skin.label))
                 {
                     var menu = new GenericMenu();
-
-                    // Copy 기능 추가
                     menu.AddItem(new GUIContent("Copy Values"), false, () =>
                     {
                         var module = element.managedReferenceValue;
-                        _clipboardType = module.GetType();
-                        _clipboardJson = JsonUtility.ToJson(module);
-                        Debug.Log($"{_clipboardType.Name} values copied.");
+                        ModuleClipboard.ClipboardType = module.GetType();
+                        ModuleClipboard.ClipboardJson = JsonUtility.ToJson(module);
                     });
 
-                    // Paste Values 기능 추가 (클립보드에 내용이 있고, 타입이 같을 때만 활성화)
-                    if (_clipboardJson != null && _clipboardType == element.managedReferenceValue.GetType())
+                    if (ModuleClipboard.ClipboardJson != null &&
+                        ModuleClipboard.ClipboardType == element.managedReferenceValue.GetType())
                     {
                         menu.AddItem(new GUIContent("Paste Values"), false, () =>
                         {
-                            JsonUtility.FromJsonOverwrite(_clipboardJson, element.managedReferenceValue);
+                            JsonUtility.FromJsonOverwrite(ModuleClipboard.ClipboardJson, element.managedReferenceValue);
                             serializedObject.ApplyModifiedProperties();
                         });
                     }
