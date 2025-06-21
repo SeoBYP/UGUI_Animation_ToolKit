@@ -32,7 +32,7 @@ namespace UGUIAnimationSamples
             text1.text = FillerTextWithRichtext;
             if (text1.isActiveAndEnabled)
             {
-                text1.GetComponent<UITextAnimator>().Play();
+                text1.GetComponent<TextAnimator>().Play();
                 return;
             }
 
@@ -49,7 +49,7 @@ namespace UGUIAnimationSamples
             text2.text = FillerTextWithRichtext;
             if (text2.isActiveAndEnabled)
             {
-                text2.GetComponent<UITextAnimator>().Play();
+                text2.GetComponent<TextAnimator>().Play();
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace UGUIAnimationSamples
             text3.ForceMeshUpdate(true);
             if (text3.isActiveAndEnabled)
             {
-                text3.GetComponent<UITextAnimator>().Play();
+                text3.GetComponent<TextAnimator>().Play();
                 return;
             }
 
@@ -85,7 +85,7 @@ namespace UGUIAnimationSamples
             text4.ForceMeshUpdate(true);
             if (text4.isActiveAndEnabled)
             {
-                text4.GetComponent<UITextAnimator>().Play();
+                text4.GetComponent<TextAnimator>().Play();
                 return;
             }
 
@@ -103,7 +103,7 @@ namespace UGUIAnimationSamples
             text5.ForceMeshUpdate(true);
             if (text5.isActiveAndEnabled)
             {
-                text5.GetComponent<UITextAnimator>().Play();
+                text5.GetComponent<TextAnimator>().Play();
                 return;
             }
 
@@ -121,7 +121,7 @@ namespace UGUIAnimationSamples
             text6.ForceMeshUpdate(true);
             if (text6.isActiveAndEnabled)
             {
-                text6.GetComponent<UITextAnimator>().Play();
+                text6.GetComponent<TextAnimator>().Play();
                 return;
             }
 

@@ -26,7 +26,7 @@ namespace UGUIAnimationToolkit.Text.Modules
         public float StaggerDelay = 0.05f;
         public Ease Ease = Ease.OutBack;
 
-        public override UniTask AnimateAsync(UITextAnimationContext ctx)
+        public override UniTask AnimateAsync(TextAnimationContext ctx)
         {
             var textComponent = ctx.TargetText;
             if (textComponent == null) return UniTask.CompletedTask;
@@ -65,7 +65,7 @@ namespace UGUIAnimationToolkit.Text.Modules
             return UniTask.WhenAll(tasks);
         }
 
-        public override UniTask RevertAsync(UITextAnimationContext ctx)
+        public override UniTask RevertAsync(TextAnimationContext ctx)
         {
             return UniTask.CompletedTask;
         }

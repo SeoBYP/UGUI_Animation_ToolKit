@@ -3,62 +3,111 @@ using System;
 using System.Linq;
 using System.Reflection;
 using UGUIAnimationToolkit.Editor;
-using UGUIAnimationToolkit.Text;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace UGUIAnimationToolkit.Editor // 네임스페이스를 Text.Editor로 명확히 하는 것을 추천합니다.
+// 네임스페이스를 Toggle.Editor로 명확히 하는 것이 좋습니다.
+namespace UGUIAnimationToolkit.Toggle.Editor
 {
-    [CustomEditor(typeof(UITextAnimator))]
-    public class UITextAnimatorEditor : UnityEditor.Editor
+    // UGUIButtonEditor와 동일한 MenuItem 구조체를 사용합니다.
+    internal struct MenuItem
     {
-        private ReorderableList _onPlayList; // 변수 이름 변경
-        private SerializedProperty _onPlaySequenceProp;
+        public string Path;
+        public Type Type;
+        public int Order;
+    }
+
+    [CustomEditor(typeof(UGUIToggle), true)]
+    [CanEditMultipleObjects]
+    public class UGUIToggleEditor : UnityEditor.Editor
+    {
+        // --- 프로퍼티 ---
+        private SerializedProperty m_InteractableProperty;
+        private SerializedProperty m_IsOnProperty;
+        private SerializedProperty m_GraphicProperty;
+        private SerializedProperty m_BackgroundGraphicProperty;
+        private SerializedProperty m_GroupProperty;
+        private SerializedProperty m_OnValueChangedProperty;
+
+        // --- 애니메이션 시퀀스 프로퍼티 ---
+        private ReorderableList _onList, _offList;
+        private SerializedProperty _onSequenceProp, _offSequenceProp;
+        private int _selectedTab = 0;
+        private readonly GUIContent[] _tabs = { new GUIContent("On Animation"), new GUIContent("Off Animation") };
 
         private void OnEnable()
         {
-            // 사용하신 코드에 맞춰 "onPlaySequence"를 찾도록 유지했습니다.
-            // 만약 UITextAnimator의 필드 이름이 onEnableSequence라면 이 부분을 수정해야 합니다.
-            _onPlaySequenceProp = serializedObject.FindProperty("onPlaySequence");
-            if (_onPlaySequenceProp != null)
-            {
-                _onPlayList = CreateList(_onPlaySequenceProp.FindPropertyRelative("modules"));
-            }
+            var so = serializedObject;
+
+            // 토글의 모든 직렬화된 필드를 찾아옵니다.
+            m_InteractableProperty = so.FindProperty("m_Interactable");
+            m_IsOnProperty = so.FindProperty("m_IsOn");
+            m_GraphicProperty = so.FindProperty("graphic");
+            m_BackgroundGraphicProperty = so.FindProperty("backgroundGraphic");
+            m_GroupProperty = so.FindProperty("m_Group");
+            m_OnValueChangedProperty = so.FindProperty("onValueChanged");
+
+            _onSequenceProp = so.FindProperty("onSequence");
+            _offSequenceProp = so.FindProperty("offSequence");
+
+            _onList = CreateList(_onSequenceProp.FindPropertyRelative("modules"));
+            _offList = CreateList(_offSequenceProp.FindPropertyRelative("modules"));
         }
 
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
 
-            // 버튼 에디터처럼 전체를 Box로 감싸 통일성을 줍니다.
-            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            EditorGUILayout.LabelField("On Play Sequence", EditorStyles.boldLabel);
+            // 1. 토글의 기본 설정 필드를 그립니다.
+            EditorGUILayout.LabelField("Toggle Settings", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(m_InteractableProperty);
+            EditorGUILayout.PropertyField(m_IsOnProperty);
+            EditorGUILayout.PropertyField(m_GraphicProperty, new GUIContent("Checkmark Graphic"));
+            EditorGUILayout.PropertyField(m_BackgroundGraphicProperty, new GUIContent("Background Graphic"));
+            EditorGUILayout.PropertyField(m_GroupProperty);
+
+            EditorGUILayout.Space(10);
+
+            // 2. 탭 기반 애니메이션 에디터를 그립니다.
+            EditorGUILayout.LabelField("Animation Sequences", EditorStyles.boldLabel);
+            _selectedTab = GUILayout.Toolbar(_selectedTab, _tabs, GUILayout.Height(25));
             EditorGUILayout.Space(5);
-            if (_onPlayList != null)
+            switch (_selectedTab)
             {
-                _onPlayList.DoLayoutList();
+                case 0: DrawSequenceGroup(_onList); break;
+                case 1: DrawSequenceGroup(_offList); break;
             }
 
-            EditorGUILayout.EndVertical();
+            EditorGUILayout.Space(10);
+
+            // 3. On Value Changed 이벤트를 그립니다.
+            EditorGUILayout.LabelField("Value Changed Event", EditorStyles.boldLabel);
+            EditorGUILayout.PropertyField(m_OnValueChangedProperty);
 
             serializedObject.ApplyModifiedProperties();
         }
 
-        // UGUIButtonEditor의 CreateList 로직을 그대로 가져와서 수정합니다.
-        private ReorderableList CreateList(SerializedProperty modulesProp)
+        private void DrawSequenceGroup(ReorderableList list)
         {
-            if (modulesProp == null)
+            EditorGUILayout.BeginVertical(EditorStyles.helpBox);
+            if (list != null)
             {
-                // 해당 프로퍼티를 찾지 못했을 때 경고를 표시합니다.
-                // UGUIAnimator.cs에 onPlaySequence 필드가 있는지 확인하세요.
-                return null;
+                list.DoLayoutList();
             }
 
+            EditorGUILayout.EndVertical();
+        }
+
+        // UGUIButtonEditor의 CreateList 로직을 그대로 가져와서
+        // ButtonAnimationModule -> ToggleAnimationModule로만 변경합니다.
+        private ReorderableList CreateList(SerializedProperty modulesProp)
+        {
+            if (modulesProp == null) return null;
             var list = new ReorderableList(serializedObject, modulesProp, true, true, true, true);
 
-            list.drawHeaderCallback =
-                rect => EditorGUI.LabelField(rect, "Text Animation Modules", EditorStyles.boldLabel);
+            list.drawHeaderCallback = rect =>
+                EditorGUI.LabelField(rect, "Toggle Animation Modules", EditorStyles.boldLabel);
             list.elementHeightCallback = index =>
             {
                 if (index < 0 || index >= modulesProp.arraySize) return EditorGUIUtility.singleLineHeight;
@@ -72,7 +121,7 @@ namespace UGUIAnimationToolkit.Editor // 네임스페이스를 Text.Editor로 �
             {
                 var menu = new GenericMenu();
 
-                // 분리된 ModuleClipboard 클래스를 사용합니다.
+                // ModuleClipboard를 사용하여 복붙 기능을 구현합니다.
                 if (ModuleClipboard.ClipboardJson != null && ModuleClipboard.ClipboardType != null)
                 {
                     var pasteName = ModuleClipboard.ClipboardType.Name.Replace("Module", "");
@@ -90,12 +139,12 @@ namespace UGUIAnimationToolkit.Editor // 네임스페이스를 Text.Editor로 �
                 }
 
                 var menuItems = new System.Collections.Generic.List<MenuItem>();
-
-                // [핵심 수정] ButtonAnimationModule -> TextAnimationModule로 변경
-                foreach (var type in TypeCache.GetTypesDerivedFrom<TextAnimationModule>())
+                // [핵심 수정] ButtonAnimationModule -> ToggleAnimationModule로 변경
+                foreach (var type in TypeCache.GetTypesDerivedFrom<ToggleAnimationModule>())
                 {
                     if (type.IsAbstract) continue;
                     var typeName = type.Name.Replace("Module", "");
+                    // 토글 모듈용 카테고리 어트리뷰트도 필요합니다.
                     var categoryAttribute = type.GetCustomAttribute<ModuleCategoryAttribute>();
                     var path = categoryAttribute?.Path != null ? $"{categoryAttribute.Path}/{typeName}" : typeName;
                     var order = categoryAttribute?.Order ?? int.MaxValue;

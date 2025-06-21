@@ -167,14 +167,76 @@ MonoBehaviour:
   m_GameObject: {fileID: 77743994}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f090c415417b34534afbde944d3e1ac3, type: 3}
+  m_Script: {fileID: 11500000, guid: e374650f24a54d29a451f3197be42b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fill: {fileID: 1291882048}
-  handle: {fileID: 1805842480}
-  slideOffset: 40
-  duration: 0.1
-  ease: 2
+  m_Interactable: 1
+  graphic: {fileID: 0}
+  backgroundGraphic: {fileID: 1291882048}
+  m_Group: {fileID: 0}
+  m_IsOn: 0
+  onValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onSequence:
+    modules:
+    - rid: 4553840103615365225
+    - rid: 4553840103615365226
+  offSequence:
+    modules:
+    - rid: 4553840103615365227
+    - rid: 4553840103615365228
+  references:
+    version: 2
+    RefIds:
+    - rid: 4553840103615365225
+      type: {class: ToggleGraphicAlphaModule, ns: UGUIAnimationToolkit.Toggle.Modules, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0
+        UseCurrentAsFrom: 0
+        Target: 0
+        From: 0
+        To: 1
+        Duration: 0.1
+        Ease: 2
+    - rid: 4553840103615365226
+      type: {class: ToggleSlideModule, ns: UGUIAnimationToolkit.Toggle.Modules, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0
+        UseCurrentAsFrom: 1
+        targetTransform: {fileID: 1805842479}
+        FromOffset: {x: -20, y: 0}
+        ToOffset: {x: 20, y: 0}
+        Duration: 0.1
+        Ease: 2
+    - rid: 4553840103615365227
+      type: {class: ToggleGraphicAlphaModule, ns: UGUIAnimationToolkit.Toggle.Modules, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0
+        UseCurrentAsFrom: 0
+        Target: 0
+        From: 1
+        To: 0
+        Duration: 0.1
+        Ease: 2
+    - rid: 4553840103615365228
+      type: {class: ToggleSlideModule, ns: UGUIAnimationToolkit.Toggle.Modules, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0
+        UseCurrentAsFrom: 1
+        targetTransform: {fileID: 1805842479}
+        FromOffset: {x: 20, y: 0}
+        ToOffset: {x: -20, y: 0}
+        Duration: 0.1
+        Ease: 2
 --- !u!1 &184164879
 GameObject:
   m_ObjectHideFlags: 0
@@ -250,6 +312,74 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184164879}
   m_CullTransparentMesh: 1
+--- !u!1 &290279453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 290279456}
+  - component: {fileID: 290279455}
+  - component: {fileID: 290279454}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &290279454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290279453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &290279455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290279453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &290279456
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290279453}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &526264919
 GameObject:
   m_ObjectHideFlags: 0
@@ -297,14 +427,76 @@ MonoBehaviour:
   m_GameObject: {fileID: 526264919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a4cc6295692d4bf8a15ea2751ba7dbd, type: 3}
+  m_Script: {fileID: 11500000, guid: e374650f24a54d29a451f3197be42b75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkmark: {fileID: 1525651165}
-  fill: {fileID: 184164881}
-  duration: 0.1
-  delay: 0.025
-  ease: 2
+  m_Interactable: 1
+  graphic: {fileID: 1525651165}
+  backgroundGraphic: {fileID: 184164881}
+  m_Group: {fileID: 0}
+  m_IsOn: 0
+  onValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  onSequence:
+    modules:
+    - rid: 4553840103615365213
+    - rid: 4553840103615365214
+  offSequence:
+    modules:
+    - rid: 4553840103615365215
+    - rid: 4553840103615365216
+  references:
+    version: 2
+    RefIds:
+    - rid: 4553840103615365213
+      type: {class: ToggleGraphicAlphaModule, ns: UGUIAnimationToolkit.Toggle.Modules, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0.025
+        UseCurrentAsFrom: 0
+        Target: 0
+        From: 0
+        To: 1
+        Duration: 0.1
+        Ease: 2
+    - rid: 4553840103615365214
+      type: {class: ToggleScaleModule, ns: UGUIAnimationToolkit.Toggle.Modules, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0
+        UseCurrentAsFrom: 0
+        targetTransform: {fileID: 1525651164}
+        From: {x: 0, y: 0, z: 0}
+        To: {x: 1, y: 1, z: 1}
+        Duration: 0.1
+        Ease: 2
+    - rid: 4553840103615365215
+      type: {class: ToggleGraphicAlphaModule, ns: UGUIAnimationToolkit.Toggle.Modules, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0
+        UseCurrentAsFrom: 0
+        Target: 0
+        From: 1
+        To: 0
+        Duration: 0.1
+        Ease: 2
+    - rid: 4553840103615365216
+      type: {class: ToggleScaleModule, ns: UGUIAnimationToolkit.Toggle.Modules, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0.025
+        UseCurrentAsFrom: 0
+        targetTransform: {fileID: 1525651164}
+        From: {x: 1, y: 1, z: 1}
+        To: {x: 0, y: 0, z: 0}
+        Duration: 0.1
+        Ease: 2
 --- !u!1 &751595581
 GameObject:
   m_ObjectHideFlags: 0
@@ -603,6 +795,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1217502731}
   - component: {fileID: 1217502730}
+  - component: {fileID: 1217502729}
   - component: {fileID: 1217502732}
   m_Layer: 0
   m_Name: Main Camera
@@ -611,6 +804,14 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!81 &1217502729
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217502728}
+  m_Enabled: 1
 --- !u!20 &1217502730
 Camera:
   m_ObjectHideFlags: 0
@@ -852,7 +1053,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1342152108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1228,3 +1429,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1217502731}
   - {fileID: 1342152111}
+  - {fileID: 290279456}

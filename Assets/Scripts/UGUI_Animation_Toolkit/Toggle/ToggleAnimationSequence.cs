@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace UGUIAnimationToolkit.Text
+namespace UGUIAnimationToolkit.Toggle
 {
     [Serializable]
-    public class TextAnimationSequence
+    public class ToggleAnimationSequence
     {
-        [SerializeReference] public List<TextAnimationModule> modules = new();
+        [SerializeReference] public List<ToggleAnimationModule> modules = new();
         
-        public async UniTask PlayAsync(TextAnimationContext ctx)
+        public async UniTask PlayAsync(ToggleAnimationContext ctx)
         {
-            ctx.MotionHandle.Complete();
+            ctx.MotionHandle.Cancel();
             var tasks = new List<UniTask>();
 
             foreach (var module in modules)

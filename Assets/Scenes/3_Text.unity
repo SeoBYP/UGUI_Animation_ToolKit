@@ -451,8 +451,8 @@ MonoBehaviour:
         Enable: 1
         Description: 
         Delay: 0
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
+        From: {r: 1, g: 1, b: 1, a: 1}
+        To: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
         CharDuration: 0.2
         SkipValuesDuringDelay: 0
         StaggerDelay: 0.025

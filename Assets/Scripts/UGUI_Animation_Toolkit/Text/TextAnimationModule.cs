@@ -10,8 +10,8 @@ namespace UGUIAnimationToolkit.Text
         public string Description;
         public float Delay = 0f;
 
-        public abstract UniTask AnimateAsync(UITextAnimationContext ctx);
+        public abstract UniTask AnimateAsync(TextAnimationContext ctx);
         
-        public abstract UniTask RevertAsync(UITextAnimationContext ctx);
+        public abstract UniTask RevertAsync(TextAnimationContext ctx);
     }
 }

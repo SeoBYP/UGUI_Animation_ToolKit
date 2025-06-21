@@ -26,7 +26,7 @@ namespace UGUIAnimationToolkit.Text.Modules
 
         private string _initialText;
 
-        public override UniTask AnimateAsync(UITextAnimationContext ctx)
+        public override UniTask AnimateAsync(TextAnimationContext ctx)
         {
             var textComponent = ctx.TargetText;
             if (textComponent == null) return UniTask.CompletedTask;
@@ -46,7 +46,7 @@ namespace UGUIAnimationToolkit.Text.Modules
                 .ToUniTask();
         }
 
-        public override UniTask RevertAsync(UITextAnimationContext ctx)
+        public override UniTask RevertAsync(TextAnimationContext ctx)
         {
             if (ctx.TargetText == null) return UniTask.CompletedTask;
             // 되돌리기는 즉시 원래 텍스트로 설정합니다.

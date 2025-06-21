@@ -6,7 +6,7 @@ namespace UGUIAnimationToolkit.Text
 {
     [AddComponentMenu("UI/Advanced/UGUI Text Animator", 40)]
     [RequireComponent(typeof(TMP_Text))]
-    public class UITextAnimator : MonoBehaviour
+    public class TextAnimator : MonoBehaviour
     {
  
         [Header("Animation Sequences")] 
@@ -16,13 +16,13 @@ namespace UGUIAnimationToolkit.Text
         // 여기에 OnClick, OnShow 등 다양한 시퀀스를 추가할 수 있습니다.
         // [SerializeField] private TextAnimationSequence customSequence = new();
 
-        private UITextAnimationContext _context;
+        private TextAnimationContext _context;
         private TMP_Text _targetText;
 
         private void Awake()
         {
             _targetText = GetComponent<TMP_Text>();
-            _context = new UITextAnimationContext(_targetText);
+            _context = new TextAnimationContext(_targetText);
         }
 
         private void OnEnable()
