@@ -1,0 +1,19 @@
+{
+  "name": "com.seobyp.ugui-animation-toolkit", // 고유한 패키지 식별자
+  "version": "1.0.0",                          // SemVer 형식
+  "displayName": "UGUI Animation Toolkit",     // 에디터에 표시될 이름
+  "description": "A toolkit for animating UGUI elements.", 
+  "unity": "2019.4",                           // 최소 지원 Unity 버전
+  "keywords": [
+    "ugui",
+    "animation",
+    "toolkit"
+  ],
+  "author": {
+    "name": "SeoBYP",
+    "url": "https://github.com/SeoBYP"
+  },
+  "dependencies": {
+    // 이 패키지가 또 다른 패키지에 의존한다면 여기에
+  }
+}
