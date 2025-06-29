@@ -30,9 +30,9 @@ namespace UGUIAnimationToolkit
         private float m_DebounceDuration = 0f;
 
         [Header("Animation Sequences")] [SerializeField]
-        private AnimationSequence hoverSequence = new();
+        private ButtonAnimationSequence hoverSequence = new();
 
-        [SerializeField] private AnimationSequence clickSequence = new();
+        [SerializeField] private ButtonAnimationSequence clickSequence = new();
 
         private readonly UIButtonAnimationContext _context = new();
         private bool _isThrottled = false;
@@ -145,7 +145,7 @@ namespace UGUIAnimationToolkit
             Press();
         }
 
-        private void PlayAnimation(AnimationSequence sequence, ButtonAnimationEventType eventType,
+        private void PlayAnimation(ButtonAnimationSequence sequence, ButtonAnimationEventType eventType,
             PointerEventData eventData)
         {
             if (sequence == null) return;

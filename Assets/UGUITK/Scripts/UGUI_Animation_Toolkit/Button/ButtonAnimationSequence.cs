@@ -6,7 +6,7 @@ using UnityEngine;
 namespace UGUIAnimationToolkit
 {
     [Serializable]
-    public class AnimationSequence
+    public class ButtonAnimationSequence
     {
         [SerializeReference] public List<ButtonAnimationModule> modules = new List<ButtonAnimationModule>();
 
