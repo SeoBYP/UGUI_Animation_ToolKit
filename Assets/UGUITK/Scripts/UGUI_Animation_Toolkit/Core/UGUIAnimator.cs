@@ -13,7 +13,7 @@ namespace UGUIAnimationToolkit.Core
     public abstract class UGUIAnimator
     {
         [Tooltip("이 애니메이터가 정의하는 모든 애니메이션 이벤트 리스트입니다.")] [SerializeField]
-        private List<UIAnimationEvent> animationEvents = new();
+        protected List<UIAnimationEvent> animationEvents = new();
 
         [NonSerialized] private Dictionary<string, UIAnimationEvent> _eventMap;
         [NonSerialized] private bool _isInitialized = false;
@@ -42,7 +42,7 @@ namespace UGUIAnimationToolkit.Core
 
         public void Play(string eventName, PointerEventData eventData = null)
         {
-            if (_isInitialized)
+            if (!_isInitialized)
             {
                 Debug.LogError("[UGUIAnimator] Animator is not initialized. Call Initialize() in Awake or OnEnable");
                 return;

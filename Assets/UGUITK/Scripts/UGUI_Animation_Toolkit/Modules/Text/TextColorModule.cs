@@ -2,22 +2,23 @@
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
+using TMPro;
+using UGUIAnimationToolkit.Core;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UGUIAnimationToolkit.Modules
 {
     [Serializable]
-    [ModuleCategory("Image", Order = 1)]
-    public class ImageColorModule : ButtonAnimationModule
+    [ModuleCategory("Text",Order = 2)] 
+    public class TextColorModule : UIAnimationModule
     {
-        [Header("Animation Settings")] public Image Target;
+        [Header("Animation Settings")] public TextMeshProUGUI Target;
         public Color From = Color.white;
         public Color To = Color.gray;
         public float Duration = 0.2f;
         public Ease Ease = Ease.OutSine;
-
-        public override UniTask AnimateAsync(UIButtonAnimationContext ctx)
+        
+        public override UniTask AnimateAsync(UIAnimationContext ctx)
         {
             return LMotion.Create(From, To, Duration)
                 .WithEase(Ease)
@@ -26,7 +27,7 @@ namespace UGUIAnimationToolkit.Modules
                 .ToUniTask();
         }
 
-        public override UniTask RevertAsync(UIButtonAnimationContext ctx)
+        public override UniTask RevertAsync(UIAnimationContext ctx)
         {
             return LMotion.Create(To, From, Duration)
                 .WithEase(Ease)

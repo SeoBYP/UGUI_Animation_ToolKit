@@ -2,13 +2,14 @@
 using Cysharp.Threading.Tasks;
 using LitMotion;
 using LitMotion.Extensions;
+using UGUIAnimationToolkit.Core;
 using UnityEngine;
 
 namespace UGUIAnimationToolkit.Modules
 {
     [Serializable]
     [ModuleCategory("Transform",Order = 3)] 
-    public class RotationModule : ButtonAnimationModule
+    public class RotationModule : UIAnimationModule
     {
         [Header("Animation Settings")] public RectTransform Target;
         public Vector3 FromEuler = Vector3.zero;
@@ -16,7 +17,7 @@ namespace UGUIAnimationToolkit.Modules
         public float Duration = 0.2f;
         public Ease Ease = Ease.OutBack;
 
-        public override UniTask AnimateAsync(UIButtonAnimationContext ctx)
+        public override UniTask AnimateAsync(UIAnimationContext ctx)
         {
             return LMotion.Create(
                     Quaternion.Euler(FromEuler),
@@ -28,7 +29,7 @@ namespace UGUIAnimationToolkit.Modules
                 .ToUniTask();
         }
 
-        public override UniTask RevertAsync(UIButtonAnimationContext ctx)
+        public override UniTask RevertAsync(UIAnimationContext ctx)
         {
             return LMotion.Create(
                     Quaternion.Euler(ToEuler),

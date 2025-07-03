@@ -511,16 +511,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSequence:
-    modules:
-    - rid: 4553840058172702805
-  clickSequence:
-    modules:
-    - rid: 4553840058172702807
+  m_Interactable: 1
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ThrottleDuration: 0
+  m_DebounceDuration: 0
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules:
+        - rid: 4553840288714719340
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules:
+        - rid: 4553840288714719339
   references:
     version: 2
     RefIds:
-    - rid: 4553840058172702805
+    - rid: 4553840288714719339
+      type: {class: RippleEffectModule, ns: UGUIAnimationToolkit.Modules.Effects, asm: Assembly-CSharp}
+      data:
+        Enable: 1
+        Description: 
+        Delay: 0
+        rippleImage: {fileID: 836419880}
+        FillDuration: 0.15
+        FadeOutDuration: 0.25
+        EaseType: 2
+    - rid: 4553840288714719340
       type: {class: ImageColorAlphaModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
@@ -531,16 +559,6 @@ MonoBehaviour:
         To: 1
         Duration: 0.15
         Ease: 2
-    - rid: 4553840058172702807
-      type: {class: RippleModule, ns: UGUIAnimationToolkit.Modules.Effects, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        rippleImage: {fileID: 836419880}
-        FillDuration: 0.15
-        FadeOutDuration: 0.25
-        EaseType: 2
 --- !u!1 &1011632731
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,8 +1010,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283651071
-  m_fontColor: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 0.99999917, b: 0.99999917, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1214,7 +1232,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.20784315, g: 0.1254902, b: 0.20000002, a: 0}
+  m_Color: {r: 0.20784315, g: 0.1254902, b: 0.20000002, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1290,18 +1308,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4753d9416cbc485382dc0df0dbdbf037, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hoverSequence:
-    modules:
-    - rid: 4553840011674386645
-    - rid: 4553840011674386647
-    - rid: 4553840011674386648
-  clickSequence:
-    modules:
-    - rid: 4553840011674386649
+  m_Interactable: 1
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ThrottleDuration: 0
+  m_DebounceDuration: 0
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules:
+        - rid: 4553840288714719331
+        - rid: 4553840288714719332
+        - rid: 4553840288714719333
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules:
+        - rid: 4553840288714719335
   references:
     version: 2
     RefIds:
-    - rid: 4553840011674386645
+    - rid: 4553840288714719331
       type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
@@ -1312,7 +1348,7 @@ MonoBehaviour:
         To: {x: 1.1, y: 1.1, z: 1.1}
         Duration: 0.07
         Ease: 5
-    - rid: 4553840011674386647
+    - rid: 4553840288714719332
       type: {class: ImageColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
@@ -1323,7 +1359,7 @@ MonoBehaviour:
         To: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
         Duration: 0.2
         Ease: 2
-    - rid: 4553840011674386648
+    - rid: 4553840288714719333
       type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
@@ -1334,7 +1370,7 @@ MonoBehaviour:
         To: {r: 1, g: 1, b: 1, a: 1}
         Duration: 0.2
         Ease: 2
-    - rid: 4553840011674386649
+    - rid: 4553840288714719335
       type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
       data:
         Enable: 1
@@ -1561,7 +1597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.3254717, b: 0.3254717, a: 0}
+  m_Color: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

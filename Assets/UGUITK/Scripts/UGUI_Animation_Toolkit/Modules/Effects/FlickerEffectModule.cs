@@ -1,12 +1,14 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using UGUIAnimationToolkit.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace UGUIAnimationToolkit.Modules
 {
+    [ModuleCategory("Effect", Order = 30)]
     [Serializable]
-    public class FlickerModule : ButtonAnimationModule
+    public class FlickerEffectModule : UIAnimationModule
     {
         [Header("Flicker Settings")] public Graphic Target;
 
@@ -17,7 +19,7 @@ namespace UGUIAnimationToolkit.Modules
 
         [Tooltip("깜빡일때의 Color")] [Range(0, 1)] public Color FlickerColor = Color.red;
 
-        public override async UniTask AnimateAsync(UIButtonAnimationContext ctx)
+        public override async UniTask AnimateAsync(UIAnimationContext ctx)
         {
             // 깜빡임 시작 전의 원래 알파 값을 저장해둡니다.
             var originalColor = Target.color;
@@ -45,7 +47,7 @@ namespace UGUIAnimationToolkit.Modules
             }
         }
 
-        public override UniTask RevertAsync(UIButtonAnimationContext ctx)
+        public override UniTask RevertAsync(UIAnimationContext ctx)
         {
             return UniTask.CompletedTask;
         }

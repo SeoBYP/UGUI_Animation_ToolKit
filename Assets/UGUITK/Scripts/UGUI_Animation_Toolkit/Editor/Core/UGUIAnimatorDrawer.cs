@@ -28,9 +28,9 @@ namespace UGUIAnimationToolkit.Eidtor.Core
                 _reorderableLists.Add(property.propertyPath, list);
             }
 
-            // ReorderableList를 그립니다.
-            // 전체를 Box로 감싸 통일성을 줍니다.
+            // ReorderableList를 그립니다..
             EditorGUI.BeginProperty(position, label, eventsProp);
+            // [수정] 헤더 라벨을 제대로 표시하기 위해 label을 전달합니다.
             list.DoList(position);
             EditorGUI.EndProperty();
         }
@@ -49,7 +49,8 @@ namespace UGUIAnimationToolkit.Eidtor.Core
             {
                 rect.y += 2;
                 var element = eventsProp.GetArrayElementAtIndex(index);
-                EditorGUI.PropertyField(rect, element, GUIContent.none);
+                // [수정] GUIContent.none 대신 element.displayName을 사용합니다.
+                EditorGUI.PropertyField(rect, element, new GUIContent(element.displayName), true);
             };
             return list;
         }
