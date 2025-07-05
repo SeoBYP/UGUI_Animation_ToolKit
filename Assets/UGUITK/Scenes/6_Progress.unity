@@ -173,76 +173,28 @@ MonoBehaviour:
   m_Interactable: 1
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 870485825}
-        m_TargetAssemblyTypeName: ProgressSample, Assembly-CSharp
-        m_MethodName: Add
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_ThrottleDuration: 0
   m_DebounceDuration: 0
-  hoverSequence:
-    modules:
-    - rid: 4553840011674386645
-    - rid: 4553840011674386647
-    - rid: 4553840011674386648
-  clickSequence:
-    modules:
-    - rid: 4553840011674386649
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840011674386645
-      type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 25323410}
-        From: {x: 1, y: 1, z: 1}
-        To: {x: 1.1, y: 1.1, z: 1.1}
-        Duration: 0.07
-        Ease: 5
-    - rid: 4553840011674386647
-      type: {class: ImageColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1701297862}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 0}
-        To: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840011674386648
-      type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 699979443}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840011674386649
-      type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 25323410}
-        From: {x: 1.1, y: 1.1, z: 1.1}
-        To: {x: 0.9, y: 0.9, z: 0.9}
-        Duration: 0.07
-        Ease: 5
+    RefIds: []
 --- !u!1 &259148253
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,60 +426,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cd99e3c1db46df98490b0d3e9a9f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FillImage: {fileID: 624269581}
-  m_MinValue: 0
-  m_MaxValue: 100
-  m_Value: 100
-  m_Direction: 0
-  m_OnValueChanged:
+  _fillImage: {fileID: 624269581}
+  _minValue: 0
+  _maxValue: 1
+  _value: 1
+  _direction: 0
+  _OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_AnimationSequence:
-    modules:
-    - rid: 4553840236279627907
-    - rid: 4553840236279627936
-    - rid: 4553840236279627937
-    - rid: 4553840236279627938
+  animator:
+    animationEvents:
+    - eventName: OnValueChange
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840236279627907
-      type: {class: ProgressBarValueModule, ns: UGUIAnimationToolkit.ProgressBar.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Duration: 0.5
-        Ease: 5
-    - rid: 4553840236279627936
-      type: {class: DelayedFillModule, ns: UGUIAnimationToolkit.ProgressBar.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        m_DelayedFillImage: {fileID: 599580292}
-        m_Delay: 0.1
-        m_Duration: 0.6
-        m_Ease: 8
-    - rid: 4553840236279627937
-      type: {class: ProgressBarShakeModule, ns: UGUIAnimationToolkit.ProgressBar.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        ShakeStrength: {x: 15, y: 0, z: 0}
-        Duration: 0.4
-        Frequency: 20
-        DampingRatio: 1
-    - rid: 4553840236279627938
-      type: {class: ProgressBarTextModule, ns: UGUIAnimationToolkit.ProgressBar.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        targetText: {fileID: 1221039373}
-        Format: 2
-        CustomFormat: '{value} / {max}'
+    RefIds: []
 --- !u!1 &486042105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1495,28 +1413,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cd99e3c1db46df98490b0d3e9a9f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FillImage: {fileID: 1746310169}
-  m_MinValue: 0
-  m_MaxValue: 100
-  m_Value: 100
-  m_Direction: 0
-  m_OnValueChanged:
+  _fillImage: {fileID: 1746310169}
+  _minValue: 0
+  _maxValue: 1
+  _value: 1
+  _direction: 0
+  _OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_AnimationSequence:
-    modules:
-    - rid: 4553840236279627907
+  animator:
+    animationEvents:
+    - eventName: OnValueChange
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840236279627907
-      type: {class: ProgressBarValueModule, ns: UGUIAnimationToolkit.ProgressBar.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Duration: 0.5
-        Ease: 5
+    RefIds: []
 --- !u!1 &1108165218
 GameObject:
   m_ObjectHideFlags: 0
@@ -1643,39 +1559,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8cd99e3c1db46df98490b0d3e9a9f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FillImage: {fileID: 758035012}
-  m_MinValue: 0
-  m_MaxValue: 100
-  m_Value: 100
-  m_Direction: 0
-  m_OnValueChanged:
+  _fillImage: {fileID: 758035012}
+  _minValue: 0
+  _maxValue: 1
+  _value: 1
+  _direction: 0
+  _OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_AnimationSequence:
-    modules:
-    - rid: 4553840236279627925
-    - rid: 4553840236279627906
+  animator:
+    animationEvents:
+    - eventName: OnValueChange
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840236279627906
-      type: {class: DelayedFillModule, ns: UGUIAnimationToolkit.ProgressBar.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        m_DelayedFillImage: {fileID: 1108165220}
-        m_Delay: 0.3
-        m_Duration: 0.5
-        m_Ease: 8
-    - rid: 4553840236279627925
-      type: {class: ProgressBarValueModule, ns: UGUIAnimationToolkit.ProgressBar.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Duration: 0.5
-        Ease: 5
+    RefIds: []
 --- !u!1 &1221039371
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,76 +1769,28 @@ MonoBehaviour:
   m_Interactable: 1
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 870485825}
-        m_TargetAssemblyTypeName: ProgressSample, Assembly-CSharp
-        m_MethodName: Minus
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   m_ThrottleDuration: 0
   m_DebounceDuration: 0
-  hoverSequence:
-    modules:
-    - rid: 4553840011674386645
-    - rid: 4553840011674386647
-    - rid: 4553840011674386648
-  clickSequence:
-    modules:
-    - rid: 4553840011674386649
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840011674386645
-      type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1596170158}
-        From: {x: 1, y: 1, z: 1}
-        To: {x: 1.1, y: 1.1, z: 1.1}
-        Duration: 0.07
-        Ease: 5
-    - rid: 4553840011674386647
-      type: {class: ImageColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1981900085}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 0}
-        To: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840011674386648
-      type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 915454177}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840011674386649
-      type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1596170158}
-        From: {x: 1.1, y: 1.1, z: 1.1}
-        To: {x: 0.9, y: 0.9, z: 0.9}
-        Duration: 0.07
-        Ease: 5
+    RefIds: []
 --- !u!1 &1701297860
 GameObject:
   m_ObjectHideFlags: 0

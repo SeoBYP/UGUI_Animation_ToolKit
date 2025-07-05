@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class ProgressSample : MonoBehaviour
 {
-    [SerializeField] private UIProgressBar progressBar_1;
-    [SerializeField] private UIProgressBar progressBar_2;
-    [SerializeField] private UIProgressBar progressBar_3;
+    [SerializeField] private UGUIProgressBar progressBar_1;
+    [SerializeField] private UGUIProgressBar progressBar_2;
+    [SerializeField] private UGUIProgressBar progressBar_3;
 
     public void Add()
     {

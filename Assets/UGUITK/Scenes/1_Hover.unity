@@ -537,37 +537,25 @@ MonoBehaviour:
       m_Calls: []
   m_ThrottleDuration: 0
   m_DebounceDuration: 0
-  hoverSequence:
-    modules:
-    - rid: 4553840058172702835
-    - rid: 4553840058172702837
-  clickSequence:
-    modules: []
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840058172702835
-      type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 293838277}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840058172702837
-      type: {class: ScaleModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1845373468}
-        From: {x: 0, y: 0, z: 0}
-        To: {x: 1, y: 1, z: 1}
-        Duration: 0.2
-        Ease: 5
+    RefIds: []
 --- !u!1 &290279453
 GameObject:
   m_ObjectHideFlags: 0
@@ -578,7 +566,7 @@ GameObject:
   m_Component:
   - component: {fileID: 290279456}
   - component: {fileID: 290279455}
-  - component: {fileID: 290279454}
+  - component: {fileID: 290279457}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -586,26 +574,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &290279454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 290279453}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SendPointerHoverToParent: 1
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
 --- !u!114 &290279455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -636,6 +604,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &290279457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290279453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: -4090225696740746782, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!1 &293838275
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,37 +1039,25 @@ MonoBehaviour:
       m_Calls: []
   m_ThrottleDuration: 0
   m_DebounceDuration: 0
-  hoverSequence:
-    modules:
-    - rid: 4553840058172702829
-    - rid: 4553840058172702830
-  clickSequence:
-    modules: []
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840058172702829
-      type: {class: ImageFillAmountModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 349280121}
-        From: 0
-        To: 1
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840058172702830
-      type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 512617445}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
-        Duration: 0.2
-        Ease: 2
+    RefIds: []
 --- !u!1 &630369597
 GameObject:
   m_ObjectHideFlags: 0
@@ -1204,36 +1191,25 @@ MonoBehaviour:
       m_Calls: []
   m_ThrottleDuration: 0
   m_DebounceDuration: 0
-  hoverSequence:
-    modules:
-    - rid: 4553840058172702855
-    - rid: 4553840058172702857
-  clickSequence:
-    modules: []
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840058172702855
-      type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 39773056}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840058172702857
-      type: {class: PulseModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        pulseImage: {fileID: 26077944}
-        PulseSize: 40
-        Duration: 0.35
-        Ease: 2
+    RefIds: []
 --- !u!1 &751595581
 GameObject:
   m_ObjectHideFlags: 0
@@ -1744,37 +1720,25 @@ MonoBehaviour:
       m_Calls: []
   m_ThrottleDuration: 0
   m_DebounceDuration: 0
-  hoverSequence:
-    modules:
-    - rid: 4553840058172702842
-    - rid: 4553840058172702843
-  clickSequence:
-    modules: []
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840058172702842
-      type: {class: PositionModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1518060211}
-        From: {x: -200, y: 0}
-        To: {x: 0, y: 0}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840058172702843
-      type: {class: PositionModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1867849981}
-        From: {x: 0, y: 0}
-        To: {x: 200, y: 0}
-        Duration: 0.2
-        Ease: 2
+    RefIds: []
 --- !u!1 &1217502728
 GameObject:
   m_ObjectHideFlags: 0
@@ -2460,37 +2424,25 @@ MonoBehaviour:
       m_Calls: []
   m_ThrottleDuration: 0
   m_DebounceDuration: 0
-  hoverSequence:
-    modules:
-    - rid: 4553840058172702825
-    - rid: 4553840058172702826
-  clickSequence:
-    modules: []
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840058172702825
-      type: {class: ImageColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1966320850}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 0}
-        To: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840058172702826
-      type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1999064974}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
-        Duration: 0.2
-        Ease: 2
+    RefIds: []
 --- !u!1 &1609571880
 GameObject:
   m_ObjectHideFlags: 0
@@ -3285,48 +3237,25 @@ MonoBehaviour:
       m_Calls: []
   m_ThrottleDuration: 0
   m_DebounceDuration: 0
-  hoverSequence:
-    modules:
-    - rid: 4553840058172702850
-    - rid: 4553840058172702851
-    - rid: 4553840058172702853
-  clickSequence:
-    modules: []
+  animator:
+    animationEvents:
+    - eventName: OnHover
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
+    - eventName: OnClick
+      onCompleted:
+        m_PersistentCalls:
+          m_Calls: []
+      sequence:
+        mode: 0
+        modules: []
   references:
     version: 2
-    RefIds:
-    - rid: 4553840058172702850
-      type: {class: ImageColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1389165285}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 0}
-        To: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840058172702851
-      type: {class: TextColorModule, ns: UGUIAnimationToolkit.Modules, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        Target: {fileID: 1022914002}
-        From: {r: 1, g: 0.3254902, b: 0.3254902, a: 1}
-        To: {r: 1, g: 1, b: 1, a: 1}
-        Duration: 0.2
-        Ease: 2
-    - rid: 4553840058172702853
-      type: {class: TextCharacterSpacingModule, ns: UGUIAnimationToolkit.Editor, asm: Assembly-CSharp}
-      data:
-        Enable: 1
-        Description: 
-        Delay: 0
-        targetText: {fileID: 1022914002}
-        To: 12
-        Duration: 0.25
-        Ease: 2
+    RefIds: []
 --- !u!1 &2074741131
 GameObject:
   m_ObjectHideFlags: 0
